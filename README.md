@@ -5,7 +5,7 @@ A **simple** HTTP server written in Go that demonstrates a basic authentication 
 ## It covers
 
 - Password hashing with bcrypt
-- Session management via secure cookies backed by SQLite
+- Session management via secure cookies on SQLite
 - Role-based access control (admin and regular users)
 - Dev and prod environment separation
 
