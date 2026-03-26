@@ -1,0 +1,50 @@
+{{template "base" .}}
+
+{{define "title"}}Basic Auth{{end}}
+{{define "styles"}}
+<style>
+header {
+    background-color: var(--color-bg-ll);
+}
+
+div.wrapper.header {
+    padding-block: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+main {
+    margin-top: 3rem;
+    h2 { margin-bottom: 1.5rem; }
+    p { margin-bottom: 1rem; }
+}
+</style>
+{{end}}
+
+{{define "content"}}
+<header>
+    <div class="wrapper header">
+        <h1>Basic Auth</h1>
+        <nav>
+            {{if .IsAdmin}}
+            <a href="/admin" id="loginBtn" title="Go to admin page" class="btn">{{.Login}}</a>
+            {{else if .IsAuthenticated}}
+            <a href="/user" id="loginBtn" title="Go to user page" class="btn">{{.Login}}</a>
+            {{else}}
+            <a href="/login" id="loginBtn" title="Go to login page" class="btn">Login</a>
+            {{end}}
+        </nav>
+    </div>
+</header>
+<main>
+    <div class="wrapper">
+        <h2>Welcome</h2>
+        <p>This is a simple experiment to test a basic authentication flow built with Go and vanilla JavaScript.</p>
+        <p>It covers session management with cookies, password hashing with bcrypt, rate limiting, and a basic login/logout flow — all using only the Go standard library plus <code>golang.org/x/crypto</code>.</p>
+        <p>Use the login button on the top to authenticate and access protected content.</p>
+    </div>
+</main>
+{{end}}
+
+{{define "scripts"}}{{end}}

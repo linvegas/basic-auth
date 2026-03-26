@@ -1,0 +1,71 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{template "title" .}}</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            :root {
+                --color-bg: #f6f2ee;
+                --color-fg: #3d2b5a;
+                --color-bg-l: #d3c7bb;
+                --color-bg-ll: #e4dcd4;
+                --color-red: #c94f6d;
+                --color-green: #81b29a;
+                @media (prefers-color-scheme: dark) {
+                    --color-bg: #192330;
+                    --color-fg: #cdcecf;
+                    --color-bg-l: #212e3f;
+                    --color-bg-ll: #29394f;
+                    --color-red: #c94f6d;
+                    --color-green: #81b29a;
+                }
+            }
+            html { color-scheme: dark light; }
+            *, *::before, *::after { box-sizing: border-box; }
+            *:not(dialog) { margin: 0; }
+            body {
+                background-color: var(--color-bg);
+                color: var(--color-fg);
+                line-height: 1.5;
+                font-family: system-ui;
+                -webkit-font-smoothing: antialiased;
+            }
+            input, button, textarea, select { font: inherit; }
+            div.wrapper {
+                max-width: 1070px;
+                margin-inline: auto;
+                @media (max-width: 600px) {
+                    padding-inline: 1rem;
+                }
+            }
+            a.btn, button {
+                background-color: var(--color-bg-l);
+                color: var(--color-fg);
+                border: none;
+                padding: 0.25rem 0.5rem;
+                text-decoration: none;
+                border-radius: 0.25rem;
+                outline: 1px solid color-mix(in lab, var(--color-fg), var(--color-bg) 75%);
+                cursor: pointer;
+
+                &:hover,
+                &:focus-visible {
+                    background-color: color-mix(in lab, var(--color-bg-l), var(--color-fg) 15%);
+                    outline-color: color-mix(in lab, var(--color-fg), var(--color-bg) 35%);
+                }
+
+                &:focus {
+                    outline-color: var(--color-fg);
+                }
+            }
+        </style>
+        {{template "styles" .}}
+    </head>
+    <body>
+        {{template "content" .}}
+        {{template "scripts" .}}
+    </body>
+</html>
+{{end}}

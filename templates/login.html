@@ -1,0 +1,109 @@
+{{template "base" .}}
+
+{{define "title"}}Login - Basic Auth{{end}}
+
+{{define "styles"}}
+<style>
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    & label {
+        display: flex;
+        flex-direction: column;
+        font-weight: 500;
+        gap: 4px;
+    }
+
+    & input {
+        background: var(--color-bg);
+        color: var(--color-fg);
+        border: 1px solid var(--color-bg-ll);
+        border-radius: 0.25rem;
+        padding: 0.25rem;
+
+        &:focus {
+            outline: none;
+            border-color: var(--color-fg);
+        }
+    }
+
+    & button[type="submit"] { width: 100%; margin-top: 0.5rem; }
+}
+
+#errorMsg {
+    color: var(--color-red);
+    display: none;
+
+    &.active {
+        display: block;
+    }
+}
+</style>
+{{end}}
+
+{{define "content"}}
+<main>
+    <form action="/login" method="POST" id="loginForm">
+        <label for="user">
+            User
+            <input type="text" id="loginUserInput" name="user" maxlenght="32" required/>
+        </label>
+
+        <label for="password">
+            Password
+            <input type="password" id="loginPwdInput" name="password" maxlenght="64" required/>
+        </label>
+
+        <span id="errorMsg"></span>
+
+        <button type="submit">Login</button>
+    </form>
+</main>
+{{end}}
+
+{{define "scripts"}}
+<script>
+    loginForm.addEventListener("submit", async ev => {
+        ev.preventDefault()
+
+        const login = loginUserInput.value.trim()
+        const passwd = loginPwdInput.value.trim()
+
+        if (!login || !passwd) return
+
+        const res = await fetch("/login", {
+            method: "POST",
+            body: new FormData(ev.target)
+        })
+
+        if (res.ok) {
+            console.log("Form was sent")
+
+            ev.target.reset()
+
+            errorMsg.textContent = ""
+            errorMsg.removeAttribute("class")
+
+            window.location.href = "/"
+        } else {
+            loginPwdInput.value = ""
+
+            const text = await res.text()
+
+            errorMsg.textContent = text
+            errorMsg.setAttribute("class", "active")
+        }
+    })
+</script>
+{{end}}
